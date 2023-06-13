@@ -34,3 +34,4 @@ jobs:
           GITHUB_REF: ${{ github.ref }}
         run: |
           python send_to_discord.py ${{ steps.count_commits.outputs.count }}
+          echo "a"
