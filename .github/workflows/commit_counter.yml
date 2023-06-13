@@ -30,9 +30,9 @@ jobs:
       - name: Send to Discord
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
           GITHUB_REF: ${{ github.ref }}
         run: |
-          python send_to_discord.py ${{ steps.count_commits.outputs.count }}
-          echo "a"
+          python send_user_to_discord.py ${{ steps.count_commits.outputs.count }}
