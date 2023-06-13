@@ -1,0 +1,36 @@
+name: Commit Counter
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  commit_counter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Count commits
+        id: count_commits
+        run: |
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          echo "::set-output name=count::$COMMIT_COUNT"
+
+      - name: Send to Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REF: ${{ github.ref }}
+        run: |
+          python send_to_discord.py ${{ steps.count_commits.outputs.count }}
