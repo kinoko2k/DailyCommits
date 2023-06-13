@@ -1,6 +1,7 @@
 name: Commit Counter
 
 on:
+  push:
   schedule:
     - cron: "0 0 * * *"
 
