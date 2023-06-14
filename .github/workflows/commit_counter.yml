@@ -36,4 +36,3 @@ jobs:
           GITHUB_REF: ${{ github.ref }}
         run: |
           python send_user_to_discord.py ${{ steps.count_commits.outputs.count }}
-          python send_user_to_discord.py --yesterday
